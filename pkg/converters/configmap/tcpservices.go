@@ -63,7 +63,7 @@ func (c *tcpSvcConverter) Sync() {
 	//   - 0: namespace/name of the target service
 	//   - 1: target port number
 	//   - 2: "PROXY" means accept proxy protocol
-	//   - 3: "PROXY[-V1|V2]" means send proxy protocol, defaults to V2
+	//   - 3: "PROXY[-V1|V2|V2-SSL|V2-SSL-CN]" means send proxy protocol, defaults to V2
 	//   - 4: namespace/name of crt/key secret if should ssl-offload
 	//   - 5: check interval
 	//   - 6: namespace/name of ca/crl secret if should verify client ssl
@@ -133,6 +133,10 @@ func (c *tcpSvcConverter) Sync() {
 		backend.ProxyProt.Decode = strings.ToLower(svc.inProxy) == "proxy"
 		backend.CheckInterval = checkInterval
 		switch strings.ToLower(svc.outProxy) {
+		case "proxy-v2-ssl":
+			backend.ProxyProt.EncodeVersion = "v2-ssl"
+		case "proxy-v2-ssl-cn":
+			backend.ProxyProt.EncodeVersion = "v2-ssl-cn"
 		case "proxy", "proxy-v2":
 			backend.ProxyProt.EncodeVersion = "v2"
 		case "proxy-v1":

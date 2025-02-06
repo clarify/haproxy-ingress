@@ -942,7 +942,7 @@ d1.local#/ path01`,
 			doconfig: func(g *hatypes.Global, h *hatypes.Host, b *hatypes.Backend) {
 				b.Server.SendProxy = "send-proxy-v2"
 			},
-			srvsuffix: "send-proxy-v2",
+			srvsuffix: "send-proxy-v2-ssl",
 		},
 		{
 			doconfig: func(g *hatypes.Global, h *hatypes.Host, b *hatypes.Backend) {

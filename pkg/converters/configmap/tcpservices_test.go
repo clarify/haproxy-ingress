@@ -148,12 +148,12 @@ func TestTCPSvcSync(t *testing.T) {
 		// 10
 		{
 			svcmock:  map[string]string{"default/pg:5432": "172.17.0.101"},
-			services: map[string]string{"5432": "default/pg:5432::proxy::-"},
+			services: map[string]string{"5432": "default/pg:5432::proxy-v2-ssl-cn::-"},
 			expected: []*hatypes.TCPBackend{
 				{
 					Name:      "default_pg",
 					Port:      5432,
-					ProxyProt: hatypes.TCPProxyProt{EncodeVersion: "v2"},
+					ProxyProt: hatypes.TCPProxyProt{EncodeVersion: "v2-ssl-cn"},
 					Endpoints: []*hatypes.TCPEndpoint{
 						{Name: "srv001", IP: "172.17.0.101", Port: 5432},
 					},

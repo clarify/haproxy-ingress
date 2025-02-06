@@ -66,6 +66,11 @@ image: linux-build
 	docker build -t $(CONTROLLER_TAG) rootfs
 
 .PHONY: docker-build
+
+# Multi-arch build using Buildx
 docker-build:
 	@rm -f rootfs/haproxy-ingress-controller
-	docker build -t $(CONTROLLER_TAG) . -f builder/Dockerfile
+	docker buildx create --use --name multiarch-builder || true
+	docker buildx build --platform linux/amd64,linux/arm64 \
+		-t ghcr.io/clarify/haproxy-ingress-clarify:v0.14.7-ssl-cn . -f builder/Dockerfile \
+		--push
